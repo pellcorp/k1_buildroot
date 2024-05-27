@@ -5,7 +5,7 @@
 set -ex # abort on errors, print scripts steps
 
 # the mod is installed here
-mod_dir="/data/.klipper_mod"
+mod_dir="/usr/data/.klipper_mod"
 chroot_dir="$mod_dir/chroot"
 
 # log files for init process
@@ -39,10 +39,10 @@ uninstall() {
 
 mount_data() {
     # mount data - this would otherwise be mounted later by flashforge
-    if [ ! "`mount | grep "mmcblk0p7"`" ]; then
-        echo "Mount /data partition"
-        fsck -y /dev/mmcblk0p7 || true
-        mount /dev/mmcblk0p7 /data;
+    if [ ! "`mount | grep "mmcblk0p10"`" ]; then
+        echo "Mount /usr/data partition"
+        fsck -y /dev/mmcblk0p10 || true
+        mount /dev/mmcblk0p10 /usr/data;
     fi
 }
 
@@ -139,9 +139,9 @@ prepare_chroot() {
     fi
 
     # mount bind virtual filesystems + tmp
-    for dir in /dev /dev/pts /proc /sys /run /tmp; do mount -o bind $dir $chroot_dir$dir; done
+    for dir in /dev /dev/pts /proc /sys /run /tmp /module_driver /lib/firmware; do mount -o bind $dir $chroot_dir$dir; done
     # mount bind data
-    mount -o bind /data $chroot_dir/mnt/data
+    mount -o bind /usr/data $chroot_dir/mnt/data
     # mount bind original root, remount ro
     mount -o bind / $chroot_dir/mnt/orig_root
     mount -o bind,remount,ro $chroot_dir/mnt/orig_root

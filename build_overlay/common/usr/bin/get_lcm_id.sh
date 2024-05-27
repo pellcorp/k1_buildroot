@@ -1,0 +1,1 @@
+/mnt/orig_root/usr/bin/get_lcm_id.sh

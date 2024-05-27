@@ -29,8 +29,8 @@ setup_static_data()
 
 # keep essential network settings
 setup_static_data /etc/hostname
-setup_static_data /var/lib/iwd
-setup_static_data /etc/network/interfaces
+# setup_static_data /var/lib/iwd
+# setup_static_data /etc/network/interfaces
 setup_static_data /etc/wpa_supplicant.conf
 
 # keep dropbear keys (that is a symlink to /var/run/dropbear originally)
@@ -42,12 +42,12 @@ mkdir -p /root/.ssh
 chmod 700 /root/.ssh
 setup_static_data /root/.ssh
 
-# keep moonraker database
-mkdir -p /root/printer_data/database
-setup_static_data /root/printer_data/database
-# keep gcode files
-mkdir -p /root/printer_data/gcodes
-setup_static_data /root/printer_data/gcodes
+# # keep moonraker database
+# mkdir -p /root/printer_data/database
+# setup_static_data /root/printer_data/database
+# # keep gcode files
+# mkdir -p /root/printer_data/gcodes
+# setup_static_data /root/printer_data/gcodes
 
 ##############################
 # user provided overlay
@@ -64,5 +64,5 @@ umount /media
 # install done
 ##############################
 
-audio midi -m /usr/share/midis/getitem.mid &
+#audio midi -m /usr/share/midis/getitem.mid &
 exit 0
