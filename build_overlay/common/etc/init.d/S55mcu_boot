@@ -1,10 +1,10 @@
 #!/bin/sh
 #
-# Trigger serial bootup sequence for Flashforge Eboard MCU.
+# Trigger serial bootup sequence for K1 MCU.
 #
 
 start() {
-    /usr/libexec/boot_eboard_mcu
+    #### TODO fix me for K1
 }
 
 case "$1" in

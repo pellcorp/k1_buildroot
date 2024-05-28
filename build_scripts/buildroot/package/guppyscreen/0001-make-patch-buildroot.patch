@@ -1,8 +1,8 @@
 diff --git a/Makefile b/Makefile
-index b9759e7..de96bc2 100644
+index 44f9ab6..6c7bb37 100644
 --- a/Makefile
 +++ b/Makefile
-@@ -15,18 +15,18 @@ endif
+@@ -15,15 +15,21 @@ endif
  LVGL_DIR_NAME 	?= lvgl
  LVGL_DIR 		?= .
  
@@ -14,31 +14,20 @@ index b9759e7..de96bc2 100644
  					-Wno-unused-value -Wno-unused-parameter -Wno-missing-field-initializers -Wuninitialized -Wmaybe-uninitialized -Wall -Wextra -Wno-unused-parameter \
  					-Wno-missing-field-initializers -Wtype-limits -Wsizeof-pointer-memaccess -Wno-format-nonliteral -Wpointer-arith -Wno-cast-qual \
  					-Wunreachable-code -Wno-switch-default -Wreturn-type -Wmultichar -Wformat-security -Wno-sign-compare
--CFLAGS 			?= -O3 -g0 -MD -MP -I$(LVGL_DIR)/ $(WARNINGS)
-+override CFLAGS 			+= -O3 -g0 -MD -MP -I$(LVGL_DIR)/ $(WARNINGS)
- ifndef FF5M
--LDFLAGS 		?= -lm -Llibhv/lib -Lspdlog/build -l:libhv.a -latomic -lpthread -Lwpa_supplicant/wpa_supplicant/ -l:libwpa_client.a -lstdc++fs -l:libspdlog.a 
-+override LDFLAGS 		+= -lm -Llibhv/lib -Lspdlog/build -l:libhv.a -latomic -lpthread -Lwpa_supplicant/wpa_supplicant/ -l:libwpa_client.a -lstdc++fs -l:libspdlog.a 
- else
--CFLAGS 			?= -O3 -g0 -MD -MP -I$(LVGL_DIR)/ $(WARNINGS) --sysroot=$(SYSROOT)
+-CFLAGS 			?= -O3 -g0 -MD -MP -I$(LVGL_DIR)/ $(WARNINGS) 
+-LDFLAGS 		?= -static -lm -Llibhv/lib -Lspdlog/build -l:libhv.a -latomic -lpthread -Lwpa_supplicant/wpa_supplicant/ -l:libwpa_client.a -lstdc++fs -l:libspdlog.a
++override CFLAGS 			?= -O3 -g0 -MD -MP -I$(LVGL_DIR)/ $(WARNINGS)
++ifndef FF5M
++override LDFLAGS 		+= -lm -Llibhv/lib -Lspdlog/build -l:libhv.a -latomic -lpthread -Lwpa_supplicant/wpa_supplicant/ -l:libwpa_client.a -lstdc++fs -l:libspdlog.a
++else
 +override CFLAGS 			?= -O3 -g0 -MD -MP -I$(LVGL_DIR)/ $(WARNINGS) --sysroot=$(SYSROOT)
- FF5M_CMAKE_FLAGS ?= -DCMAKE_C_COMPILER=$(CC) -DCMAKE_CXX_COMPILER=$(CXX)
- LDFLAGS 		?= --sysroot=$(SYSROOT) -lm -Llibhv/lib -Lspdlog/build -l:libhv.a -latomic -lpthread  -Lwpa_supplicant/wpa_supplicant/ -l:libwpa_client.a -lstdc++fs -l:libspdlog.a -levdev
- endif
-@@ -54,9 +54,11 @@ ASSET_DIR		= material_46
- DEFINES			+= -D GUPPY_SMALL_SCREEN
- endif
- 
--ifdef FF5M
-+ifdef GUPPY_FF5M_SCREEN
- ASSET_DIR		= material
- DEFINES 		+= -D GUPPY_FF5M
-+DEFINES			+= -D GUPPY_SMALL_SCREEN
-+override LDFLAGS += -levdev
- endif
- 
- 
-@@ -96,14 +98,8 @@ ifdef EVDEV_CALIBRATE
++FF5M_CMAKE_FLAGS ?= -DCMAKE_C_COMPILER=$(CC) -DCMAKE_CXX_COMPILER=$(CXX)
++LDFLAGS 		?= --sysroot=$(SYSROOT) -lm -Llibhv/lib -Lspdlog/build -l:libhv.a -latomic -lpthread  -Lwpa_supplicant/wpa_supplicant/ -l:libwpa_client.a -lstdc++fs -l:libspdlog.a -levdev
++endif
+ BIN 			= guppyscreen
+ BUILD_DIR 		= ./build
+ BUILD_OBJ_DIR 	= $(BUILD_DIR)/obj
+@@ -85,14 +91,8 @@ ifdef EVDEV_CALIBRATE
  DEFINES +=  -D EVDEV_CALIBRATE
  endif
  
@@ -54,7 +43,16 @@ index b9759e7..de96bc2 100644
  
  ## MAINOBJ -> OBJFILES
  
-@@ -122,7 +118,7 @@ wpaclient:
+@@ -103,7 +103,7 @@ libhv.a:
+ 
+ libspdlog.a:
+ 	@mkdir -p $(SPDLOG_DIR)/build
+-	@cmake -B $(SPDLOG_DIR)/build -S $(SPDLOG_DIR)/ -DCMAKE_CXX_COMPILER=$(CXX)
++	@cmake $(CMAKE_FLAGS) -B $(SPDLOG_DIR)/build -S $(SPDLOG_DIR)/
+ 	$(MAKE) -C $(SPDLOG_DIR)/build -j$(nproc)
+ 
+ wpaclient:
+@@ -111,7 +111,7 @@ wpaclient:
  
  $(BUILD_OBJ_DIR)/%.o: %.cpp
  	@mkdir -p $(dir $@)

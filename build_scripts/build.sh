@@ -1,5 +1,5 @@
 # !/bin/bash
-# Build Wrapper Script for AD5M Klipper Mod
+# Build Wrapper Script for K1 Klipper Mod
 set -e
 
 SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
@@ -173,8 +173,8 @@ package_variant() {
 	variant_env $1
 	rm -f "$br_chroot"
 	xz -cT`nproc` "$br_image" > "$br_chroot"
-	package_name="Adventurer5M-KlipperMod-$GIT_VERSION-$variant.tgz"
-	package_name_pro="Adventurer5MPro-KlipperMod-$GIT_VERSION-$variant.tgz"
+	package_name="K1-KlipperMod-$GIT_VERSION-$variant.tgz"
+	package_name_pro="K1Max-KlipperMod-$GIT_VERSION-$variant.tgz"
 	mkdir -p $BUILD_PACKAGE
 	tar -cf "$BUILD_PACKAGE/$package_name" -C "$GIT_ROOT/device_files/install" . -C "$br_builddir/images/" ./chroot.tar.xz
 	cp "$BUILD_PACKAGE/$package_name" "$BUILD_PACKAGE/$package_name_pro"
@@ -187,7 +187,7 @@ package_variant() {
 
 package_uninstall()
 {
-	package_name="Adventurer5M-KlipperMod-uninstall.tgz"
+	package_name="K1-KlipperMod-uninstall.tgz"
 	tar -cf "$BUILD_PACKAGE/$package_name" -C "$GIT_ROOT/device_files/uninstall" .
 	log_info "uninstall: created $package_name"
 }

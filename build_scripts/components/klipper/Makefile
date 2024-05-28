@@ -1,4 +1,4 @@
-CC = arm-buildroot-linux-gnueabihf-gcc
+CC = mipsel-buildroot-linux-gnu-gcc
 CFLAGS = -Wall -g -O3 -shared -fPIC -flto -fwhole-program -fno-use-linker-plugin
 LDFLAGS = -shared
 

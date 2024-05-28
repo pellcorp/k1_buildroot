@@ -6,9 +6,9 @@ source $SCRIPT_DIR/../env.sh
 
 BUILD_DIR="$BUILD_OUT/wheels/"
 HOST_DIR="$BUILDROOT_SDK/host"
-CROSS="arm-buildroot-linux-gnueabihf"
+CROSS="mipsel-buildroot-linux-gnu"
 SYSROOT="$HOST_DIR/$CROSS/sysroot"
-TARGET_PYTHON="$BUILDROOT_SDK/build/python3-3.11.7/python"
+TARGET_PYTHON="$BUILDROOT_SDK/build/python3-3.11.8/python"
 # using the sysroot pyhton does not work for some reason
 # TARGET_PYTHON="$SYSROOT/usr/bin/python3"
 
@@ -38,7 +38,7 @@ log_info "Start building wheels in $(pwd) ... "
 
 # create cross venv and activate
 python3 -m pip install crossenv
-python3 -m crossenv --machine=armv7l --sysroot=$SYSROOT "$TARGET_PYTHON" cross_venv
+python3 -m crossenv --machine=mips --sysroot=$SYSROOT "$TARGET_PYTHON" cross_venv
 source cross_venv/bin/activate
 
 log_info "Build moonraker wheels ..."
@@ -60,10 +60,10 @@ mkdir klipper_wheels
 KLIPPER_DIR="$GIT_ROOT/submodules/klipper"
 pip wheel -w klipper_wheels/ -r "$KLIPPER_DIR/scripts/klippy-requirements.txt"
 
-log_info "Building klipperscreen wheels ..."
-mkdir klipperscreen_wheels
-KLIPPERSCREEN_DIR="$GIT_ROOT/submodules/KlipperScreen"
-pip wheel -w klipperscreen_wheels/ -r "$KLIPPERSCREEN_DIR/scripts/KlipperScreen-requirements.txt"
+# log_info "Building klipperscreen wheels ..."
+# mkdir klipperscreen_wheels
+# KLIPPERSCREEN_DIR="$GIT_ROOT/submodules/KlipperScreen"
+# pip wheel -w klipperscreen_wheels/ -r "$KLIPPERSCREEN_DIR/scripts/KlipperScreen-requirements.txt"
 
 log_info "Done"
 pwd

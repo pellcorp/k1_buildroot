@@ -6,7 +6,7 @@
 WPA_SUPPLICANT=/usr/sbin/wpa_supplicant
 PID_FILE=/run/wpa_supplicant.pid
 NICENESS=10
-WPA_ARGS="-Dnl80211 -iwlan0 -c/etc/wpa_supplicant.conf"
+WPA_ARGS="-iwlan0 -c /etc/wpa_supplicant.conf"
 
 start() {
     start-stop-daemon -S -b -m -p $PID_FILE -N $NICENESS -x $WPA_SUPPLICANT -- $WPA_ARGS

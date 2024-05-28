@@ -8,7 +8,7 @@ source $BASE_DIR/.mod_env
 create_version()
 {
     pushd $1 > /dev/null
-    version="$(git describe --tags)-AD5M-$(date +%Y%m%d)"
+    version="$(git describe --tags)-GuppyMod-$(date +%Y%m%d)"
     popd  > /dev/null
     echo $version
 }
@@ -37,7 +37,7 @@ KLIPPER_MOD_VERSION=$(git describe --tags)
 popd
 
 cat << EOF > $TARGET_ROOT/etc/os-release
-NAME=Buildroot-AD5M
+NAME=Buildroot-GuppyMod
 VERSION=-$KLIPPER_MOD_VERSION
 ID=buildroot
 VERSION_ID=$KLIPPER_MOD_VERSION
