@@ -3,7 +3,7 @@
 # Automatically start/stop ustreamer for camera livestream via http
 #
 
-CAMERA_DEVNAME=video0
+CAMERA_DEVNAME=video4
 CAMERA_SUBSYSTEM=video4linux
 CAMERA_MIN_X_RES=1280
 HTTP_PORT=8080

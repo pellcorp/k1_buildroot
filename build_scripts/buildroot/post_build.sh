@@ -80,6 +80,12 @@ fi
 cp -r klippy docs config README.md COPYING $TARGET_ROOT/root/printer_software/klipper/
 rm no-gcc-check.patch
 
+cp $BUILD_SCRIPTS/components/klipper/linux_mcu.config ./.config
+CROSS_PREFIX=mipsel-buildroot-linux-gnu- make
+
+cp out/klipper.elf $TARGET_ROOT/usr/bin/klipper_mcu
+rm -rf .config out
+
 create_version ./ > $TARGET_ROOT/root/printer_software/klipper/klippy/.version
 popd
 
@@ -212,5 +218,5 @@ then
     ln -fs /mnt/orig_root/opt/tslib-1.12/etc/ts.conf "$TARGET_ROOT/etc/ts.conf"
 
     # config symlink
-    ln -s /root/printer_data/config/guppyconfig.json $TARGET_ROOT/root/printer_software/guppyscreen/guppyconfig.json
+    ln -sf /root/printer_data/config/guppyconfig.json $TARGET_ROOT/root/printer_software/guppyscreen/guppyconfig.json
 fi
