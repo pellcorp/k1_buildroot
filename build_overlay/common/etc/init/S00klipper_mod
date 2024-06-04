@@ -60,7 +60,7 @@ check_usb_marker() {
                 usb_mod_marker=$(ls -1 /mnt/ | grep "^klipper_mod" | head -n1)
                 # check for flashforge update on usb
                 usb_update_marker=$(ls -1 /mnt/ | grep "^K1.*tgz" | head -n1)
-                [ -n "$usb_update_marker" ] || usb_update_marker=$(ls -1 /mnt/ | grep "^flashforge_init.sh" | head -n1)
+                [ -n "$usb_update_marker" ] || usb_update_marker=$(ls -1 /mnt/ | grep "^k1mod_init.sh" | head -n1)
                 umount /dev/$sd$i || true;
 
                 if ([ -n "$usb_mod_marker" ] || [ -n "$usb_update_marker" ]); then

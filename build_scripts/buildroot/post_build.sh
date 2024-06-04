@@ -70,15 +70,15 @@ make
 rm Makefile
 
 popd
-cp $BUILD_SCRIPTS/components/klipper/no-gcc-check.patch .
-if patch -r - -b -N -p1 < no-gcc-check.patch;
+cp $BUILD_SCRIPTS/components/klipper/k1-klipper.patch .
+if patch -r - -b -N -p1 < k1-klipper.patch;
 then
     log_info "Skipping patch, already applied"
 else
     log_info "Patch applied"
 fi
 cp -r klippy docs config README.md COPYING $TARGET_ROOT/root/printer_software/klipper/
-rm no-gcc-check.patch
+rm k1-klipper.patch
 
 cp $BUILD_SCRIPTS/components/klipper/linux_mcu.config ./.config
 CROSS_PREFIX=mipsel-buildroot-linux-gnu- make
@@ -212,11 +212,17 @@ if [ "$MOD_VARIANT" == "guppyscreen" ]
 then
     # files are in the overlay
     log_info "Installing guppyscreen"
-    ## add calibration data for tslib uinput calibrated device
-    rm -f "$TARGET_ROOT/etc/ts.conf"
-    ln -fs /mnt/orig_root/opt/tslib-1.12/etc/pointercal "$TARGET_ROOT/etc/pointercal"
-    ln -fs /mnt/orig_root/opt/tslib-1.12/etc/ts.conf "$TARGET_ROOT/etc/ts.conf"
 
     # config symlink
     ln -sf /root/printer_data/config/guppyconfig.json $TARGET_ROOT/root/printer_software/guppyscreen/guppyconfig.json
+    mkdir -p $TARGET_ROOT/root/printer_data/config/GuppyScreen/scripts
+
+    GUPPYOUT=$BUILDROOT_OUT/variant-guppyscreen/build/guppyscreen-origin_main/
+
+    cp -r $GUPPYOUT/themes $TARGET_ROOT/root/printer_software/guppyscreen/
+    cp $GUPPYOUT/k1/scripts/*.py $TARGET_DIR/root/printer_data/config/GuppyScreen/scripts/
+    cp $GUPPYOUT/k1/scripts/guppy_cmd.cfg $TARGET_DIR/root/printer_data/config/GuppyScreen/
+    cp $GUPPYOUT/k1/k1_mods/*.py $TARGET_DIR/root/printer_software/klipper/klippy/extras/
+
+    sed -i "s|/usr/data/|/root/|g" $TARGET_DIR/root/printer_data/config/GuppyScreen/guppy_cmd.cfg
 fi

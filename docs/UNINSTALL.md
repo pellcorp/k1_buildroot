@@ -1,6 +1,6 @@
 # Uninstall
 
-There are multiple options to uninstall Klipper Mod from an AD5M (Pro) printer.
+There are multiple options to uninstall Klipper Mod from an K1 (Max) printer.
 
 > [!WARNING]
 > During uninstall, all you local changes to the mod are removed from the printer. That includes all your custom files such as the G-Code files or custom Klipper configuration. Make sure to create a back-up if you want to re-install at a later point.
@@ -9,9 +9,7 @@ There are multiple options to uninstall Klipper Mod from an AD5M (Pro) printer.
 
 ### Uninstall via USB
 
-Download the `Adventurer5M-KlipperMod-uninstall.tgz` file from the [Release](https://github.com/xblax/flashforge_ad5m_klipper_mod/releases) page onto a USB flash drive, similar to the [Install](INSTALL.md) procedure.
-
-Alternatively a marker file `klipper_mod_remove` will also trigger automatic uninstall during printer start-up.
+Create a marker file `klipper_mod_remove` in the USB thumb drive, plug it into the printer then reboot will automatic uninstall the mod.
 
 ### Uninstall via SSH
 

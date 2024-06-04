@@ -1,25 +1,21 @@
 
 # Install
 
-Klipper Mod for the AD5M is designed to be fully removable and not break any functions of the stock software. 
+Klipper Mod for the K1 (Max) is designed to be fully removable and not break any functions of the stock software. 
 
 > [!CAUTION]
-> *If you want to install this Klipper Mod to your AD5M (Pro) then be aware, that you risk to loose your warranty or damage the printer. Proceed at your own risk if you want to try this mod!*
+> *If you want to install this Klipper Mod to your K1 (Max) then be aware, that you risk to loose your warranty or damage the printer. Proceed at your own risk if you want to try this mod!*
 
 ## Installation
 
 The mod uses the same installation mechanism as the stock software:
-1) Download the latest `Adventurer5M-KlipperMod*.tgz` update file from the [Release](https://github.com/xblax/flashforge_ad5m_klipper_mod/releases) page onto a USB flash drive.
-2) Plug in the drive before starting the printer. 
-3) Successful installation will be indicated on the display when finished.
+1) Download the latest `K1-KlipperMod*.tgz` update file from the [Release](https://github.com/ballaswag/creality_k1_klipper_mod/releases) and extract its content into a temporary directory on the K1.
+2) In the temporary directory, run `./k1mod_init.sh`
+3) Verify `k1mod_init.sh` exit with code `0`.
+4) Reboot
 
-The mod installer currently requires that printers were updated to at least version 2.4.5 of the stock Flashforge firmware. Please check the release page for versions that are known to work.
+After installation the printer will by default start the Klipper Mod system instead of the stock K1 software. It is still possible to start the stock software without uninstalling the mod, if needed. See section [Dual Boot](#dual-boot) below.
 
-After installation the printer will by default start the Klipper Mod system instead of the stock Flashforge software. It is still possible to start the stock software without uninstalling the mod, if needed. See section [Dual Boot](#dual-boot) below.
-
-### Install on 5M Pro
-
-The installation archives must be renamed to `Adventurer5MPro-*.tgz`. Otherwise the install files are not detected by the 5M Pro printers.
 
 ### Install Custom Files
 
@@ -32,13 +28,10 @@ This mechanism can also be used to overwrite default config files. Check the [Li
 
 ### Initial Network Setup
 
-If no custom configuration is provided the mod is pre-configured for DHCP only. Connect the printer via Ethernet and use your home router web interface to find the IP that was auto-assigned to the printer.
+Once rebooted, Guppy Screen will start. Use the WIFI menu in Guppy Screen to rejoin the WIFI network. The IP will be different from before. Refresh the Guppy Screen System tab to see the new assigned IP.
 
-It is also possible to install a custom network configuration via the custom file installation mechanism described above. Create a custom [`/etc/network/interfaces`](https://manpages.debian.org/bullseye/ifupdown/interfaces.5.en.html) file or install a [custom WiFi config](WIFI.md) to `/var/lib/iwd`.
+It is also possible to install a custom network configuration via the custom file installation mechanism described above. 
 
-### Install Log File
-
-During the installation process a log file `klipper_mod_install.log` is written to the USB drive. This log file is helpful to understand the reason for installation failures. Please provide this file if you ask for help in the [GitHub Discussion](https://github.com/xblax/flashforge_ad5m_klipper_mod/discussions) forums.
 
 ## Updating
 
