@@ -43,11 +43,11 @@ chmod 700 /root/.ssh
 setup_static_data /root/.ssh
 
 # # keep moonraker database
-# mkdir -p /root/printer_data/database
-# setup_static_data /root/printer_data/database
-# # keep gcode files
-# mkdir -p /root/printer_data/gcodes
-# setup_static_data /root/printer_data/gcodes
+mkdir -p /root/printer_data/database
+setup_static_data /root/printer_data/database
+# keep gcode files
+mkdir -p /root/printer_data/gcodes
+setup_static_data /root/printer_data/gcodes
 
 ##############################
 # user provided overlay

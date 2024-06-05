@@ -1,0 +1,26 @@
+#!/bin/sh
+#
+# Flash nozzle mcu
+#
+
+TAG="mcu-update"
+
+start() {
+    if [ -f /root/.noz_klipper.bin ]; then
+	logger -t $TAG "Flashing noz_klipper.bin"
+	/usr/libexec/mcu_util.py -c -i /dev/ttyS1 -g -u -f /root/.noz_klipper.bin &> /tmp/mcu-update.log
+
+	mv /root/.noz_klipper.bin /root/.noz_klipper.bin.updated
+    fi
+}
+
+case "$1" in
+    start)
+	start
+	;;
+    *)
+        echo "Usage: $0 {start}"
+        exit 1
+esac
+
+exit $?

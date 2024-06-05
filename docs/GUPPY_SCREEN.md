@@ -2,7 +2,7 @@
 
 *_Note: Guppy Screen is in alpha state._*
 
-[GuppyScreen](https://github.com/ballaswag/guppyscreen/) is an alternative gui created by @ballaswag originally for the K1 but wit a bit of editing also runs on the AD5M(Pro). It uses far less resources than KlipperScreen and is more responsive but has less features (at the moment).
+[GuppyScreen](https://github.com/ballaswag/guppyscreen/) is an alternative gui created by @ballaswag originally for the K1. It uses far less resources than KlipperScreen and is more responsive but has less features (at the moment).
 
 Some options can be edited in the 'systems' menu, for others edit `/root/printer_data/config/guppyscreen.json`, [see the documentation](https://ballaswag.github.io/docs/guppyscreen/configuration/) for the settings.
 
