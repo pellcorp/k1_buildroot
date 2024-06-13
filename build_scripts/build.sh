@@ -137,7 +137,7 @@ package_sdk()
 variant_env()
 {
 	variant=$1
-    br_builddir="$BUILDROOT_OUT/variant-$variant"
+    br_builddir="$BUILDROOT_OUT/$variant"
 	br_image="$br_builddir/images/rootfs.tar"
 	br_chroot="$br_builddir/images/chroot.tar.xz"
 }
@@ -146,7 +146,7 @@ defconfig_variant() {
     variant_env $1
     pushd $br_builddir
   	# merge config fragments to .config
-  	"$BUILDROOT_GIT"/support/kconfig/merge_config.sh "$BUILDROOT_CONFIGS/sdk" "$BUILDROOT_CONFIGS/base" "$BUILDROOT_CONFIGS/variant-$variant"
+  	"$BUILDROOT_GIT"/support/kconfig/merge_config.sh "$BUILDROOT_CONFIGS/sdk" "$BUILDROOT_CONFIGS/base" "$BUILDROOT_CONFIGS/$variant"
     popd > /dev/null
 }
 
@@ -178,7 +178,7 @@ package_variant() {
 	mkdir -p $BUILD_PACKAGE
 	tar -cf "$BUILD_PACKAGE/$package_name" -C "$GIT_ROOT/device_files/install" . -C "$br_builddir/images/" ./chroot.tar.xz
 	cp "$BUILD_PACKAGE/$package_name" "$BUILD_PACKAGE/$package_name_pro"
-	log_info "variant-$variant: created $package_name"
+	log_info "$variant: created $package_name"
 }
 
 ##############################
