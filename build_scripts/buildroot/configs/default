@@ -1,6 +1,7 @@
-# KlipperScreen variant of ADM5 Klipper Mod
+BR2_ROOTFS_POST_BUILD_SCRIPT="$(BR2_EXTERNAL_PELLCORP_PATH)/post_build.sh"
 
-BR2_ROOTFS_POST_BUILD_SCRIPT="$(BR2_EXTERNAL_AD5M_PATH)/post_build.sh"
+# Build Options
+BR2_TARGET_ROOTFS_TAR=y
 
 # Variant Overlays
 BR2_ROOTFS_OVERLAY="../../build_overlay/default"

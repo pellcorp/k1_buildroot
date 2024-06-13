@@ -134,8 +134,7 @@ package_sdk()
 ###### Buildroot Mod Variant Build Steps ######
 ###############################################
 
-variant_env()
-{
+variant_env() {
 	variant=$1
     br_builddir="$BUILDROOT_OUT/$variant"
 	br_image="$br_builddir/images/rootfs.tar"
@@ -171,14 +170,15 @@ clean_variant() {
 }
 
 package_variant() {
-	variant_env $1
-	rm -f "$br_chroot"
-	xz -cT`nproc` "$br_image" > "$br_chroot"
-	package_name="K1-Buildroot-$GIT_VERSION-$variant.tar"
-	mkdir -p $BUILD_PACKAGE
-	tar -cf "$BUILD_PACKAGE/$package_name" -C "$GIT_ROOT/device_files/install" . -C "$br_builddir/images/" ./chroot.tar.xz
-	cp "$BUILD_PACKAGE/$package_name" "$BUILD_PACKAGE/$package_name_pro"
-	log_info "$variant: created $package_name"
+    if [ "$1" = "default" ]; then
+        variant_env $1
+        rm -f "$br_chroot"
+        xz -cT`nproc` "$br_image" > "$br_chroot"
+        package_name="K1-Buildroot-$GIT_VERSION-$variant.tar"
+        mkdir -p $BUILD_PACKAGE
+        tar -cf "$BUILD_PACKAGE/$package_name" -C "$GIT_ROOT/device_files/install" . -C "$br_builddir/images/" ./chroot.tar.xz
+        log_info "$variant: created $package_name"
+    fi
 }
 
 ##############################

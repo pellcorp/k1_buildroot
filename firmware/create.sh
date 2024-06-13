@@ -31,7 +31,6 @@ function write_ota_info() {
 
 function customise_rootfs() {
     write_ota_info
-    sudo cp $CURRENT_DIR/etc/init.d/* /tmp/${version}-pellcorp/squashfs-root/etc/init.d/
 }
 
 function update_rootfs() {
