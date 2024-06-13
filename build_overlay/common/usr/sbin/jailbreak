@@ -1,3 +1,0 @@
-#!/bin/sh
-echo "Breaking out from chroot jail to host environment. Be careful!"
-nsenter --target 1 --mount -- env -i /bin/sh --login

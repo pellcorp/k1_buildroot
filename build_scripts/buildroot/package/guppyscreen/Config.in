@@ -1,7 +1,0 @@
-config BR2_PACKAGE_GUPPYSCREEN
-	bool "guppyscreen"
-    select BR2_PACKAGE_LIBEVDEV
-	help
-	  Build and install guppyscreen
-
-	  https://github.com/ballaswag/guppyscreen

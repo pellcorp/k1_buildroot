@@ -1,10 +1,10 @@
 # Top Level Makefile for Flashfore AD5M Klipper Mod
 SHELL := /bin/bash
 BUILD := build_scripts/build.sh
-VARIANTS = lite klipperscreen guppyscreen
+VARIANTS = default qemu
 
 all: packages checksums
-packages: sdk lite klipperscreen guppyscreen uninstall
+packages: sdk default
 
 # SDK targets
 sdk: sdk_package

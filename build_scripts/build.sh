@@ -2,6 +2,7 @@
 # Build Wrapper Script for K1 Klipper Mod
 set -e
 
+
 SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
 source $SCRIPT_DIR/env.sh
 
@@ -173,8 +174,7 @@ package_variant() {
 	variant_env $1
 	rm -f "$br_chroot"
 	xz -cT`nproc` "$br_image" > "$br_chroot"
-	package_name="K1-KlipperMod-$GIT_VERSION-$variant.tar"
-	package_name_pro="K1Max-KlipperMod-$GIT_VERSION-$variant.tar"
+	package_name="K1-Buildroot-$GIT_VERSION-$variant.tar"
 	mkdir -p $BUILD_PACKAGE
 	tar -cf "$BUILD_PACKAGE/$package_name" -C "$GIT_ROOT/device_files/install" . -C "$br_builddir/images/" ./chroot.tar.xz
 	cp "$BUILD_PACKAGE/$package_name" "$BUILD_PACKAGE/$package_name_pro"
@@ -203,7 +203,7 @@ checksums()
 }
 
 cd $GIT_ROOT
-GIT_VERSION=$(git describe)
+GIT_VERSION=$(git describe --always)
 
 # run command
 $@
