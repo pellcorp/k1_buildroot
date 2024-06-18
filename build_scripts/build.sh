@@ -121,24 +121,14 @@ clean_sdk() {
   rm -rf "$BUILDROOT_SDK"
 }
 
-package_sdk()
-{
-	br_image=( "$BUILDROOT_SDK"/images/*sdk-buildroot.tar.gz )
-	sdk_name="KlipperMod-SDK-$GIT_VERSION.tar.xz"
-	mkdir -p $BUILD_PACKAGE
-	gzip -dc "$br_image" | xz -T`nproc` > $BUILD_PACKAGE/$sdk_name
-	log_info "sdk: created $sdk_name"
-}
-
-###############################################
-###### Buildroot Mod Variant Build Steps ######
-###############################################
-
 variant_env() {
 	variant=$1
     br_builddir="$BUILDROOT_OUT/$variant"
-	br_image="$br_builddir/images/rootfs.tar"
-	br_chroot="$br_builddir/images/chroot.tar.xz"
+    if [ "$variant" = "qemu" ]; then
+        br_image="$br_builddir/images/rootfs.ext2"
+    else
+	    br_image="$br_builddir/images/rootfs.tar"
+    fi
 }
 
 defconfig_variant() {
@@ -167,39 +157,6 @@ rebuild_variant() {
 clean_variant() {
 	variant_env $1
 	rm -rf "$br_builddir"
-}
-
-package_variant() {
-    if [ "$1" = "default" ]; then
-        variant_env $1
-        rm -f "$br_chroot"
-        xz -cT`nproc` "$br_image" > "$br_chroot"
-        package_name="K1-Buildroot-$GIT_VERSION-$variant.tar"
-        mkdir -p $BUILD_PACKAGE
-        tar -cf "$BUILD_PACKAGE/$package_name" -C "$GIT_ROOT/device_files/install" . -C "$br_builddir/images/" ./chroot.tar.xz
-        log_info "$variant: created $package_name"
-    fi
-}
-
-##############################
-###### Misc Build Steps ######
-##############################
-
-package_uninstall()
-{
-	package_name="K1-KlipperMod-uninstall.tar"
-	tar -cf "$BUILD_PACKAGE/$package_name" -C "$GIT_ROOT/device_files/uninstall" .
-	log_info "uninstall: created $package_name"
-}
-
-checksums()
-{
-	pushd $BUILD_PACKAGE > /dev/null
-	rm -f md5sums
-	md5sum * > md5sums
-	log_info "created checksums:"
-	cat md5sums
-	popd > /dev/null
 }
 
 cd $GIT_ROOT
