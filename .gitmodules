@@ -1,5 +1,5 @@
 [submodule "submodules/buildroot"]
 	path = submodules/buildroot
-	url = git@github.com:ballaswag/k1_mod_buildroot_chroot.git
+	url = https://github.com/pellcorp/k1_mod_buildroot_chroot
 	branch = k1-main
 
