@@ -127,7 +127,7 @@ variant_env() {
     if [ "$variant" = "qemu" ]; then
         br_image="$br_builddir/images/rootfs.ext2"
     else
-	    br_image="$br_builddir/images/rootfs.tar"
+	    br_image="$br_builddir/images/rootfs.tar.xz"
     fi
 }
 

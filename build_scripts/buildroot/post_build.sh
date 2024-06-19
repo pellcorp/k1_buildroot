@@ -10,6 +10,12 @@ export VARIANT_BUILDROOT_OUT=$BUILDROOT_OUT/$MOD_VARIANT
 function patch_file() {
     file="$1"
 
+    grep -q "#!/usr/bin/python" $file > /dev/null
+    if [ $? -eq 0 ]; then
+        echo "Fixing python header [$file] ..."
+        sed -i 's:#!/usr/bin/python:/#!/opt/usr/bin/python/g' $file
+    fi
+
     rpath="$(/usr/bin/patchelf --print-rpath "${file}" 2> /dev/null)"
     if [ $? -ne 0 ]; then
         return 0
