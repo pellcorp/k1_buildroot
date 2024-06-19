@@ -14,6 +14,7 @@ function patch_file() {
     if [ $? -eq 0 ]; then
         echo "Fixing python header [$file] ..."
         sed -i 's:#!/usr/bin/python:/#!/opt/usr/bin/python/g' $file
+        return 0
     fi
 
     rpath="$(/usr/bin/patchelf --print-rpath "${file}" 2> /dev/null)"
