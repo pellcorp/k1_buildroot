@@ -10,23 +10,26 @@ export VARIANT_BUILDROOT_OUT=$BUILDROOT_OUT/$MOD_VARIANT
 function patch_file() {
     file="$1"
 
-    rpath="$(/usr/bin/patchelf --print-rpath "${file}" 2>&1)"
+    rpath="$(/usr/bin/patchelf --print-rpath "${file}" 2> /dev/null)"
     if [ $? -ne 0 ]; then
         return 0
     fi
 
     # built in patchelf for buldroot corrupts libs on MIPS need 22.04 ubuntu or debian bookworm patchelf
-    interpreter=$(/usr/bin/patchelf --print-interpreter $file)
+    interpreter=$(/usr/bin/patchelf --print-interpreter $file 2> /dev/null)
     
     # do not fix interpreter on anything but those binaries that already have one
-    if [ "$interpreter" != "" ] && [ "$interpreter" != "/opt${interpreter}" ]; then
+    if [ "$interpreter" != "" ] && [[ $interpreter != /opt* ]]; then
         echo "Fixing interpreter [$file] ..."
         /usr/bin/patchelf --set-interpreter /opt${interpreter} $file
     fi
-
-    if [ "$rpath" != "/opt/lib:/opt/usr/lib" ]; then
-        echo "Fixing rpath [$file] ..."
-        /usr/bin/patchelf --set-rpath '/opt/lib:/opt/usr/lib' $file
+    
+    # so anything in a bin directory or python so files
+    if [ "$rpath" = "" ]; then
+        if [[ $file = */sbin* ]] || [[ $file = */bin* ]] || [[ $file = */python*.so ]]; then
+            echo "Fixing rpath [$file] ..."
+            /usr/bin/patchelf --set-rpath '/opt/lib:/opt/usr/lib' $file
+        fi
     fi
 }
 
@@ -47,7 +50,6 @@ PRETTY_NAME="pellcorp $GIT_VERSION"
 EOF
 
 if [ "$MOD_VARIANT" = "simple" ]; then
-    find "${TARGET_DIR}" -type f \
-    | xargs -0 -r -P "${PARALLEL_JOBS:-1}" -I {} \
-            bash -c 'patch_file "${@}"' _ {} 
+    export -f patch_file
+    find "${TARGET_DIR}" -type f | xargs -r -P "${PARALLEL_JOBS:-1}" -I {} bash -c 'patch_file "${@}"' _ {}
 fi
