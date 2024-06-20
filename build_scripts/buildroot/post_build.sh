@@ -12,7 +12,7 @@ function patch_file() {
     grep -q "#!/usr/bin/python" "$file" > /dev/null
     if [ $? -eq 0 ]; then
         echo "Fixing python header [$file] ..."
-        sed -i 's:#!/usr/bin/python:/#!/opt/usr/bin/python:g' $file
+        sed -i 's:#!/usr/bin/python:#!/opt/usr/bin/python:g' $file
 
         # python is obviously not elf so no point going further
         return 0
