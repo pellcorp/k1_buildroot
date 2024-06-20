@@ -6,7 +6,7 @@ set -e
 SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
 source $SCRIPT_DIR/env.sh
 
-MULTICORE=-j$(nproc)
+MULTICORE=-j10
 #####################################################
 ###### Buildroot Common Build Helper Functions ######
 #####################################################
@@ -127,7 +127,7 @@ variant_env() {
     if [ "$variant" = "qemu" ]; then
         br_image="$br_builddir/images/rootfs.ext2"
     else
-	    br_image="$br_builddir/images/rootfs.tar.xz"
+	    br_image="$br_builddir/images/rootfs.tar"
     fi
 }
 
