@@ -9,15 +9,6 @@ source $BASE_DIR/.mod_env
 function patch_file() {
     file="$1"
 
-    grep -q "#!/usr/bin/python" "$file" > /dev/null
-    if [ $? -eq 0 ]; then
-        echo "Fixing python header [$file] ..."
-        sed -i 's:#!/usr/bin/python:#!/opt/usr/bin/python:g' $file
-
-        # python is obviously not elf so no point going further
-        return 0
-    fi
-
     rpath="$(/usr/bin/patchelf --print-rpath "$file" 2> /dev/null)"
     # not an elf file so skip it
     if [ $? -ne 0 ]; then
