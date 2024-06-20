@@ -13,7 +13,7 @@ function patch_file() {
     grep -q "#!/usr/bin/python" $file > /dev/null
     if [ $? -eq 0 ]; then
         echo "Fixing python header [$file] ..."
-        sed -i 's:#!/usr/bin/python:/#!/opt/usr/bin/python/g' $file
+        sed -i 's:#!/usr/bin/python:/#!/opt/usr/bin/python:g' $file
         return 0
     fi
 
@@ -31,9 +31,9 @@ function patch_file() {
         /usr/bin/patchelf --set-interpreter /opt${interpreter} $file
     fi
     
-    # so anything in a bin directory or python so files
+    # do not change the path of any /lib it causes segmentation faults
     if [ "$rpath" = "" ]; then
-        if [[ $file = */sbin* ]] || [[ $file = */bin* ]] || [[ $file = */python*.so ]]; then
+        if [[ $file = */sbin* ]] || [[ $file = */bin* ]] || [[ $file = /usr/lib* ]]; then
             echo "Fixing rpath [$file] ..."
             /usr/bin/patchelf --set-rpath '/opt/lib:/opt/usr/lib' $file
         fi
