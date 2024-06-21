@@ -11,6 +11,6 @@ if [ "$MOD_VARIANT" = "simple" ] && [ -f $VARIANT_BUILDROOT_OUT/images/rootfs.ta
 	tar -f $VARIANT_BUILDROOT_OUT/images/rootfs.tar --delete ./dev ./media ./mnt ./opt ./proc ./root ./run ./sys ./tmp ./var ./bin ./sbin
     [ -f $VARIANT_BUILDROOT_OUT/images/rootfs.tar.xz ] && rm $VARIANT_BUILDROOT_OUT/images/rootfs.tar.xz
 
-    echo "Gzipping rootfs.tar.xz ..."
+    echo "Creating rootfs.tar.xz ..."
 	xz -zk $VARIANT_BUILDROOT_OUT/images/rootfs.tar 
 fi
