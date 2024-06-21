@@ -1,0 +1,5 @@
+
+config BR2_PACKAGE_PYTHON_CONFIGUPDATER
+    bool "python-configupdater"
+    help
+      Config helper for updating klipper and moonraker config files

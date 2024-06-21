@@ -28,10 +28,10 @@ $(1): $(1)_build
 $(1)_prepare:
 	$(BUILD) prepare_variant $(1)
 
-$(1)_build: sdk_build $(1)_prepare
+$(1)_build: $(1)_prepare
 	$(BUILD) build_variant $(1)
 
-$(1)_rebuild: sdk_build $(1)_prepare
+$(1)_rebuild: $(1)_prepare
 	$(BUILD) rebuild_variant $(1)
 
 $(1)_clean:

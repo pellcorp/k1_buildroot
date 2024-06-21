@@ -1,2 +1,2 @@
 source "$BR2_EXTERNAL_PELLCORP_PATH/package/ustreamer/Config.in"
-
+source "$BR2_EXTERNAL_PELLCORP_PATH/package/python-configupdater/Config.in"
