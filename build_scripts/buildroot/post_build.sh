@@ -51,3 +51,9 @@ if [ "$MOD_VARIANT" = "simple" ]; then
     export -f patch_file
     find "${TARGET_DIR}" -type f | xargs -r -P "${PARALLEL_JOBS:-1}" -I {} bash -c 'patch_file "${@}"' _ {}
 fi
+
+mkdir -p $TARGET_DIR/usr/share/
+
+# because we will be prebuilding these at some stage it makes way more sense to bundle them into the rootfs
+tar -xf $GIT_ROOT/prebuilt/klippy-env.tar.xz -C $TARGET_DIR/usr/share/
+tar -xf $GIT_ROOT/prebuilt/moonraker-env.tar.xz -C $TARGET_DIR/usr/share/
