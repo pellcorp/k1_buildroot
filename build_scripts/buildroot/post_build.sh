@@ -23,16 +23,10 @@ function patch_file() {
         /usr/bin/patchelf --set-interpreter /opt${interpreter} "$file"
     fi
     
-    # this is a somewhat pointless test as we should never be running this
-    # script twice across the target directory
-    # NGINX - does not handle set-rpath not sure why need to investigate further
-    if [ "$rpath" = "" ] && [[ "$file" != */usr/sbin/nginx ]]; then
-        objdump -p "$file" 2> /dev/null | grep "NEEDED" > /dev/null
-        # only update rpath for files that NEED other libs
-        if [ $? -eq 0 ]; then
-            echo "Fixing rpath [$file] ..."
-            /usr/bin/patchelf --set-rpath '/opt/lib:/opt/usr/lib' "$file"
-        fi
+    # in order to use this with dropbear we need the rpath and it seems to work fine
+    if [ "$rpath" = "" ] && [[ "$file" = */usr/libexec/gesftpserver ]]; then
+        echo "Fixing rpath [$file] ..."
+        /usr/bin/patchelf --set-rpath '/opt/lib:/opt/usr/lib' "$file"
     fi
 }
 
