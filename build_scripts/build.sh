@@ -75,7 +75,6 @@ buildroot_build_always() # args: path make_command
 	popd > /dev/null
 }
 
-
 # (re-)build a buildroot build dir if not uptodate
 buildroot_build_if_needed() # args: path make_command target_file
 {

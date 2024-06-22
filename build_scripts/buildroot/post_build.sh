@@ -25,7 +25,8 @@ function patch_file() {
     
     # this is a somewhat pointless test as we should never be running this
     # script twice across the target directory
-    if [ "$rpath" = "" ]; then
+    # NGINX - does not handle set-rpath not sure why need to investigate further
+    if [ "$rpath" = "" ] && [[ "$file" != */usr/sbin/nginx ]]; then
         objdump -p "$file" 2> /dev/null | grep "NEEDED" > /dev/null
         # only update rpath for files that NEED other libs
         if [ $? -eq 0 ]; then
@@ -52,8 +53,8 @@ if [ "$MOD_VARIANT" = "simple" ]; then
     find "${TARGET_DIR}" -type f | xargs -r -P "${PARALLEL_JOBS:-1}" -I {} bash -c 'patch_file "${@}"' _ {}
 fi
 
-mkdir -p $TARGET_DIR/usr/share/
+mkdir -p $TARGET_DIR/usr/data/
 
 # because we will be prebuilding these at some stage it makes way more sense to bundle them into the rootfs
-tar -xf $GIT_ROOT/prebuilt/klippy-env.tar.xz -C $TARGET_DIR/usr/share/
-tar -xf $GIT_ROOT/prebuilt/moonraker-env.tar.xz -C $TARGET_DIR/usr/share/
+tar -xf $GIT_ROOT/prebuilt/klippy-env.tar.xz -C $TARGET_DIR/usr/data/
+tar -xf $GIT_ROOT/prebuilt/moonraker-env.tar.xz -C $TARGET_DIR/usr/data/
