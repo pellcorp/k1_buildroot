@@ -24,10 +24,10 @@ function patch_file() {
     fi
     
     # in order to use this with dropbear we need the rpath and it seems to work fine
-    if [ "$rpath" = "" ] && [[ "$file" = */usr/libexec/gesftpserver ]]; then
-        echo "Fixing rpath [$file] ..."
-        /usr/bin/patchelf --set-rpath '/opt/lib:/opt/usr/lib' "$file"
-    fi
+    #if [ "$rpath" = "" ] && [[ "$file" = */usr/libexec/gesftpserver ]]; then
+    #    echo "Fixing rpath [$file] ..."
+    #    /usr/bin/patchelf --set-rpath '/opt/lib:/opt/usr/lib' "$file"
+    #fi
 }
 
 pushd $GIT_ROOT > /dev/null
